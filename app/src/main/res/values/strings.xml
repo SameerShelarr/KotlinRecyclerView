@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">KotlinRecyclerView</string>
+    <string name="list_item_image">list item image</string>
+</resources>
