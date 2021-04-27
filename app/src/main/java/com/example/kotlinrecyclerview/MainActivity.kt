@@ -2,22 +2,27 @@ package com.example.kotlinrecyclerview
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
+
+    private val dummyList = generateDummyList(500)
+    private val adapter = ItemAdapter(dummyList)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val dummyList = generateDummyList(500)
         val recyclerView:RecyclerView = findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = ItemAdapter(dummyList)
+        recyclerView.adapter = adapter
         recyclerView.setHasFixedSize(true)
     }
 
-    private fun generateDummyList(size: Int): List<Item> {
+    private fun generateDummyList(size: Int): ArrayList<Item> {
         val list = ArrayList<Item>()
         for (i in 0..size) {
             val drawable = when (i % 3) {
@@ -29,5 +34,17 @@ class MainActivity : AppCompatActivity() {
             list += item
         }
         return list
+    }
+
+    fun insertItem(view: View) {
+        val index = Random.nextInt(8)
+        val newIem = Item(R.drawable.ic_security, "New Item $index", "Line 2")
+        dummyList.add(index, newIem)
+        adapter.notifyItemInserted(index)
+    }
+    fun deleteItem(view: View) {
+        val index = Random.nextInt(8)
+        dummyList.remove(dummyList[index])
+        adapter.notifyItemRemoved(index)
     }
 }
