@@ -1,3 +1,3 @@
 package com.example.kotlinrecyclerview
 
-data class Item(val imageRes:Int, val text1:String, val text2:String)
+data class Item(var imageRes:Int, var text1:String, var text2:String)
